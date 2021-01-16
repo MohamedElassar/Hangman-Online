@@ -42,15 +42,28 @@
 	}
 
 	#attempt-ctr {
-		display:inline-block;
 		position:relative;
-		margin:10% 0 0 15%;
+		margin-top:5%;
+		text-align:center;
                 font-family: "Lucida Console", "Courier New", monospace;
                 color:white;
                 font-size:30px;
 	}
 
-	#attempt-ctr span {
+	#attempts-left {
 		color:	#82a951;
 	}
-        
+
+	#New-Game {
+		background-color:#5156a9;
+		font-family: "Lucida Console", "Courier New", monospace;
+                color:white;
+                font-size:30px;
+		padding:10px;
+	}
+
+	#New-Game:hover {
+		cursor:pointer;
+		transform:scale(1.2);
+		box-shadow: 5px 5px 0 0 black;
+	}
