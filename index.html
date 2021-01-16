@@ -8,7 +8,8 @@
 
 	<body>
 		<div id = "word-ctr">
-			<p>I'm thinking of a word that's <span id = "word-length"></span> letters long</p>		
+			<p>I'm thinking of a word that's <span id = "word-length"></span> letters long...</p>
+			<p>Can you guess what it is?</p>		
 		</div>
 
 		<div id = "word" style="text-align:center;margin-top:5%;">
@@ -45,10 +46,15 @@
 
 
 	<div id = "attempt-ctr">
-		<p>Attempts Left: <span id = "attempts-left">8</span></p>		
+		<span>Attempts Left: <span id = "attempts-left">6</span></span>		
 	</div>
 
-	<script src="app.js" charset="utf-8"></script>
+	<div style="text-align:center;margin-top:5%;">
+		<input id="New-Game" type="button" value="click to start a new game!" onclick="window.location.reload();" />
+	</div>
+
+	<script src="app.js" charset="utf-8" ></script>
+
 	</body>
 
 </html>
