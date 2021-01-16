@@ -1,0 +1,56 @@
+
+	*{
+            	margin:0px;
+                padding:0px;
+	}
+            
+        body{
+            	background-color:#7851a9;
+	}
+         
+	span{
+		display:inline-block;
+	}
+
+	.letters{
+                border-bottom:3px solid white;
+                margin-left:5px;
+		margin-top:5px;
+		padding-bottom:5px;
+                font-family: "Lucida Console", "Courier New", monospace;
+                color:white;
+                font-size:30px;
+	}
+
+	#options{
+ 		text-align:center;
+		position:relative;
+                margin-top:5%;
+ 	}
+
+	#options span:hover{
+      		color:#82a951;
+                cursor:pointer;
+	}
+
+	#word-ctr {
+		font-family: "Lucida Console", "Courier New", monospace;
+                color:white;
+                font-size:30px;
+		margin-top:10%;
+		text-align:center;
+	}
+
+	#attempt-ctr {
+		display:inline-block;
+		position:relative;
+		margin:10% 0 0 15%;
+                font-family: "Lucida Console", "Courier New", monospace;
+                color:white;
+                font-size:30px;
+	}
+
+	#attempt-ctr span {
+		color:	#82a951;
+	}
+        
