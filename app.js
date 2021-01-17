@@ -7,6 +7,8 @@ const word_length_HTML = document.getElementById("word-length");
 const word_HTML = document.getElementById("word");
 const attempt_count_HTML = document.getElementById("attempts-left");
 
+const api_key = "d7167b09-3b2e-4168-a994-7dbca733edd8";
+
 const word = generateRandomWord();
 var sol = 0;
 const word_length = word.length;
@@ -19,8 +21,11 @@ function drawDivsForGuess(){
 		var div = document.createElement("span");
 		div.setAttribute('class', 'letters');
 		div.setAttribute('id', i);
-		div.innerHTML = "5";
-		div.style.color = '#7851a9';
+		div.setAttribute('style', 'vertical-align:top');
+		div.style.display = "inline-block";
+		div.style.width = "18.08px";
+		div.style.height = "30px";
+		
 		word_HTML.appendChild(div);
 	}
 }
@@ -36,13 +41,15 @@ function solutionLogic(letter) {
 		if(letter === word[i]){
 			changeWordDiv(i, letter);
 			sol+=1;
+			updateAttempt(true);
 		}
 	}
 }
 
 function changeWordDiv(num, letter){
 	var id = document.getElementById(num);
-	id.setAttribute('style', 'color:#82a951');
+	id.style.color = '#82a951';
+	
 	id.innerHTML = letter;
 }
 
@@ -57,23 +64,63 @@ function changeGuessColour(elem, bool){
 function completeMissingLetters(){
 	for(var i = 0; i < word.length; ++i) {
 		var temp = document.getElementById(i);
-		if(temp.innerHTML == 5){
+		if(temp.innerHTML == ""){
 			temp.innerHTML = word[i];
 			temp.style.color = 'red';
 		}
 	}
 }
 
-function updateAttempt(){
-	attempt_count_HTML.innerHTML -= 1;	
-	if(attempt_count_HTML.innerHTML == 0){
-		attempt_count_HTML.style.color = "red";
-		var div = document.createElement("span");
-		div.innerHTML = "whoops! The correct answer is " + word;
-		div.style.color = 'red';
-		document.getElementById("attempt-ctr").appendChild(div);
+
+function addJSONData(temp) {
+	console.log( temp[0].def[0].sseq[0] );
+	
+}
+
+
+function getJSON(){
 		
-		completeMissingLetters();		
+
+		var xmlhttp = new XMLHttpRequest();
+		var url = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/" + word + "?key=" + api_key;
+
+    		xmlhttp.onreadystatechange = function() {
+	 	if (this.readyState == 4 && this.status == 200) {
+    			var temp = JSON.parse(this.responseText);
+			addJSONData(temp);
+			}
+		};
+		
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();	
+						
+}
+
+
+function updateAttempt(bool){
+	
+	if(bool == true){
+		if(sol == word_length){
+			var div = document.createElement("span");
+			div.innerHTML = "Good Job!";
+			div.style.color = 'rgb(130, 169, 81)';
+			document.getElementById("attempt-ctr").appendChild(div);
+
+			getJSON();
+		} 
+	} else {
+		attempt_count_HTML.innerHTML -= 1;	
+		if(attempt_count_HTML.innerHTML == 0){
+			attempt_count_HTML.style.color = "red";
+			var div = document.createElement("span");
+			div.innerHTML = "whoops! The correct answer is " + word;
+			div.style.color = 'red';
+			document.getElementById("attempt-ctr").appendChild(div);
+	
+			completeMissingLetters();
+
+			getJSON();		
+		}
 	}
 }
 
@@ -87,7 +134,7 @@ function eventListen(elem){
 					solutionLogic(letter);
 				} else {
 					changeGuessColour(elem, false);
-					updateAttempt(); 
+					updateAttempt(false); 
 					}
 				delete guesses[letter];			
 				}
