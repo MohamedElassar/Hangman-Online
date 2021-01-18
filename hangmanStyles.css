@@ -60,6 +60,7 @@
                 color:white;
                 font-size:30px;
 		padding:10px;
+		white-space: normal;
 	}
 
 	#New-Game:hover {
