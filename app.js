@@ -13,19 +13,35 @@ var sol = 0;
 
 var url = "https://raw.githubusercontent.com/matthewreagan/WebstersEnglishDictionary/master/dictionary_compact.json";
 
+
 var xmlhttp = new XMLHttpRequest();
 xmlhttp.open("GET", url, true);
 xmlhttp.send();		
 
 xmlhttp.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
-    		var json = JSON.parse(this.responseText);
+	    	var str = this.responseText;
+		//console.log(str);	
+		var json = JSON.parse(str);
 		main(json);
 		}
 	};
-	
 
-	
+
+/*
+getJSON(url, function(data) {
+		main(data);
+	} 
+);
+
+async function getJSON(url, cb){
+		const response = await fetch(url);
+		const json_data = await response.json();
+		cb(json_data);
+
+	}	
+
+*/	
 
 function main(json){
 	var json_stuff = generateRandomWord(json);
@@ -39,8 +55,15 @@ function main(json){
 
 function generateRandomWord(word_list) {
 	var key_list = Object.keys(word_list);
-	var word = key_list[ Math.floor(Math.random()*key_list.length) ];
-	var definition_string = word_list[word];
+	var word;
+	var definition_string;
+	
+	do {
+		word = key_list[ Math.floor(Math.random()*key_list.length) ];
+		
+	} while (word.includes("-") || word.includes(" "));
+
+	definition_string = word_list[word];
 	initialUpdate(word);
 	return [word, definition_string];
 	
