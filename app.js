@@ -7,29 +7,50 @@ const word_HTML = document.getElementById("word");
 const attempt_count_HTML = document.getElementById("attempts-left");
 const webster_HTML = document.getElementById("webster");
 
-//const api_key = "d7167b09-3b2e-4168-a994-7dbca733edd8";
-//var URL = "https://raw.githubusercontent.com/adambom/dictionary/master/dictionary.json";
 //var URL = "https://raw.githubusercontent.com/matthewreagan/WebstersEnglishDictionary/master/dictionary_compact.json";
-
-
-var word;
-var definition_string;
-
-generateRandomWord();
-const word_length = word.length;
-word_length_HTML.innerHTML = word_length;
-
 
 var sol = 0;
 
+var url = "https://raw.githubusercontent.com/matthewreagan/WebstersEnglishDictionary/master/dictionary_compact.json";
 
-drawDivsForGuess();
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.open("GET", url, true);
+xmlhttp.send();		
 
-main();
+xmlhttp.onreadystatechange = function() {
+	if (this.readyState == 4 && this.status == 200) {
+    		var json = JSON.parse(this.responseText);
+		main(json);
+		}
+	};
+	
+
+	
+
+function main(json){
+	var json_stuff = generateRandomWord(json);
+	for(var i = 0; i < arr.length;  ++i){
+		var elem = arr[i];
+		eventListen( elem, json_stuff[0], json_stuff[1] )
+	}
+
+}
 
 
-function drawDivsForGuess(){
-	for(var i = 0; i < word_length; ++i){
+function generateRandomWord(word_list) {
+	var key_list = Object.keys(word_list);
+	var word = key_list[ Math.floor(Math.random()*key_list.length) ];
+	var definition_string = word_list[word];
+	initialUpdate(word);
+	return [word, definition_string];
+	
+}
+
+
+function initialUpdate(word){
+
+	word_length_HTML.innerHTML = word.length;
+	for(var i = 0; i < word.length; ++i){
 		var div = document.createElement("span");
 		div.setAttribute('class', 'letters');
 		div.setAttribute('id', i);
@@ -43,43 +64,34 @@ function drawDivsForGuess(){
 }
 
 
-function generateRandomWord() {
-	var key_list = Object.keys(word_list);
-	word = key_list[ Math.floor(Math.random()*key_list.length) ];
-	definition_string = word_list[word];
+
+function eventListen(elem, word, definition_string){
+	elem.addEventListener('click', function(){
+		if(attempt_count_HTML.innerHTML > 0 && sol != word.length ){
+			var letter = elem.innerHTML;
+			if( guesses.hasOwnProperty(letter) ){
+				if( word.includes(letter) ) {
+					changeGuessColour(elem, true);
+					solutionLogic(letter, word, definition_string);
+				} else {
+					changeGuessColour(elem, false);
+					updateAttempt(false, word, definition_string); 
+					}
+				delete guesses[letter];			
+				}
+			}
+		}
+	);
 }
 
 
-/*
-function logicJSON(word) {
 
-	const getJSON = async url => {
- 	 try {
-   	 	const response = await fetch(url);
-   	 	if(!response.ok) // check if response worked (no 404 errors etc...)
-    	 		throw new Error(response.statusText);
-
-    		const data = await response.json(); // get JSON from the response
-   	 	return data; // returns a promise, which resolves to this data value
- 	 	} catch(error) {
-    	return error;
-  	}
-}
-	getJSON(URL).then(data => {
-		definition(data[word.toUpperCase()]) ;  
-	}).catch(error => {
-		console.error(error);
-	});
-
-}
-*/
-
-function solutionLogic(letter) {
-	for(var i = 0; i < word_length; ++i){
+function solutionLogic(letter, word, defintion_string) {
+	for(var i = 0; i < word.length; ++i){
 		if(letter === word[i]){
 			changeWordDiv(i, letter);
 			sol+=1;
-			updateAttempt(true);
+			updateAttempt(true, word, defintion_string);
 		}
 	}
 }
@@ -99,7 +111,7 @@ function changeGuessColour(elem, bool){
 	}
 }
 
-function completeMissingLetters(){
+function completeMissingLetters(word){
 	for(var i = 0; i < word.length; ++i) {
 		var temp = document.getElementById(i);
 		if(temp.innerHTML == ""){
@@ -110,7 +122,7 @@ function completeMissingLetters(){
 }
 
 
-function definition(){
+function definition(definition_string){
 	var title = document.createElement("p");
 	title.innerHTML = "Definition";
 	title.setAttribute('style', 'text-decoration: underline');
@@ -122,17 +134,16 @@ function definition(){
 }
 
 
-function updateAttempt(bool){
+function updateAttempt(bool, word, definition_string){
 	
 	if(bool == true){
-		if(sol == word_length){
+		if(sol == word.length){
 			var div = document.createElement("span");
 			div.innerHTML = "Good Job!";
 			div.style.color = 'rgb(130, 169, 81)';
 			document.getElementById("attempt-ctr").appendChild(div);
 
-			//logicJSON(word);
-			definition();
+			definition(definition_string);
 		} 
 	} else {
 		attempt_count_HTML.innerHTML -= 1;	
@@ -143,40 +154,12 @@ function updateAttempt(bool){
 			div.style.color = 'red';
 			document.getElementById("attempt-ctr").appendChild(div);
 	
-			completeMissingLetters();
+			completeMissingLetters(word);
 
-			//logicJSON(word);
-			definition();	
+			definition(definition_string);	
 		}
 	}
 }
-
-
-function eventListen(elem){
-		elem.addEventListener('click', function(){
-		if(attempt_count_HTML.innerHTML > 0 && sol != word_length ){
-			var letter = elem.innerHTML;
-			if( guesses.hasOwnProperty(letter) ){
-				if( word.includes(letter) ) {
-					changeGuessColour(elem, true);
-					solutionLogic(letter);
-				} else {
-					changeGuessColour(elem, false);
-					updateAttempt(false); 
-					}
-				delete guesses[letter];			
-				}
-			}
-		}
-	);
-}
-
-
-function main(){
-	arr.forEach(eventListen);	
-}
-
-
 
 
 
