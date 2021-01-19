@@ -167,6 +167,7 @@ function updateAttempt(bool, word, definition_string){
 			document.getElementById("attempt-ctr").appendChild(div);
 
 			definition(definition_string);
+			getPronounciation(word);
 		} 
 	} else {
 		attempt_count_HTML.innerHTML -= 1;	
@@ -179,12 +180,75 @@ function updateAttempt(bool, word, definition_string){
 	
 			completeMissingLetters(word);
 
-			definition(definition_string);	
+			definition(definition_string);
+			getPronounciation(word);	
 		}
 	}
 }
 
+function getPronounciation(word){
+	const api_key = "d7167b09-3b2e-4168-a994-7dbca733edd8";
+
+	var MW_url = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/" + word + "?key=" + api_key;
+
+	var xml = new XMLHttpRequest();
+	xml.open("GET", MW_url, true);
+	xml.send();		
+
+	xml.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+		    	var str = this.responseText;
+			var json = JSON.parse(str);
+			
+			try {
+				var pronounce = json[0]["hwi"]["prs"][0]["mw"];
+				var audio = json[0]["hwi"]["prs"][0]["sound"]["audio"];
+				getAudio(audio);
+			} catch (error){
+				console.log("No audio found");
+			}
+				
+		}
+	};
+}
 
 
+function getAudio(audio){
+	
+	var format = "mp3";
+	var subdirectory;
+
+	if(audio.includes("bix")){
+		subdirectory = "bix";
+	} else if(audio.includes("gg")){
+		subdirectory = "gg";
+	} else if( parseInt(audio[0]) == Number || audio[0] === "_"){
+		subdirectory = "number";
+	} else {
+		subdirectory = audio[0];
+	}
+
+	var audio_url = "https://media.merriam-webster.com/audio/prons/en/us/mp3/" + subdirectory + "/" + audio + "." + format;
+	
+	embedAudio(audio_url);
+
+}
+
+
+function embedAudio(audio_url){
+
+		var div = document.createElement("audio");
+		div.setAttribute("controls", "controls");		
+
+		var source = document.createElement("source");
+		source.setAttribute('src', audio_url);
+		source.setAttribute('type', "audio/mpeg");
+		
+		div.appendChild(source)
+		
+		document.getElementById("attempt-ctr").appendChild(div);	
+	
+
+}
 
 
