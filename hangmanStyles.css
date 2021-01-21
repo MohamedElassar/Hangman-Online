@@ -42,10 +42,13 @@
 	}
 
 	#attempt-ctr {
-		position:relative;
+		
 		margin-top:5%;
+		display:inline-block;
+		float:right;
 		text-align:center;
-                font-family: "Lucida Console", "Courier New", monospace;
+		
+		font-family: "Lucida Console", "Courier New", monospace;
                 color:white;
                 font-size:30px;
 	}
@@ -58,7 +61,7 @@
 		background-color:#5156a9;
 		font-family: "Lucida Console", "Courier New", monospace;
                 color:white;
-                font-size:20px;
+                font-size:30px;
 		padding:10px;
 		white-space: normal;
 	}
@@ -70,7 +73,7 @@
 	}
 
 	#webster {
-		margin-top:5%;
+		
 		font-family: "Lucida Console", "Courier New", monospace;
                 color:white;
                 font-size:30px;
@@ -78,5 +81,49 @@
 		padding-right:10%;
 	}
 
+	#container {
+		margin-top:5%;
+		text-align:center;
+	}
 
-        
+
+	canvas {
+		text-align:center;
+    		border-width: 1px;
+    		border-style: dashed;
+    		border-color: white;
+		padding:10px 10px 0px 10px;
+	}
+
+
+/*
+	audio:not([controls]) {
+    		display: none !important;
+	}
+
+	audio {
+		width: 300px;
+    		height: 54px;
+	}
+
+	.audio_container {
+		position: absolute;
+    		width: 34px;
+    		height: 34px;
+    		border-radius: 50%;
+    		border-width: 1px;
+    		border-style: solid;
+    		border-color: #d2e3fc;
+    		background-color: #e8f0fe;
+		display: inline;
+	}	
+
+	.audio_logo {
+		background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMiIgaGVpZ2h0PSIyMiIgdmlld2JveD0iMCAwIDIyIDIyIj4KICA8cG9seWdvbiBmaWxsPSIjMUE3M0U4IiBwb2ludHM9IjIuNzUgOC4yNSAyLjc1IDEzLjc1IDYuNDE3IDEzLjc1IDExIDE4LjMzMyAxMSAzLjY2NyA2LjQxNyA4LjI1IiAvPgo8L3N2Zz4K);
+		height: 22px;
+    		margin: 7px;
+    		position: absolute;
+    		width: 22px;
+		display:block;
+	}
+*/
