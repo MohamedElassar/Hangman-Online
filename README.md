@@ -1,4 +1,4 @@
-# Hangman-Online
+#Link to Game:
 https://mohamedelassar.github.io/hangman-online/
 
 To get started, simply click on the link above and have fun playing Hangman!
