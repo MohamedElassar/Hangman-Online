@@ -1,76 +1,25 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
-		<title>Hangman</title>
-        	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="hangmanStyles.css">
+		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="sudokuStyles.css">
+		<title>Sudoku</title>
 	</head>
 
 	<body>
-		<div id = "word-ctr">
-			<p>I'm thinking of a word that's <span id = "word-length"></span> letters long...</p>
-			<p>Can you guess what it is?</p>		
+
+		<div id="root">
+			<div id="puzzle"></div>
 		</div>
 
-		<div id = "word" style="text-align:center;margin-top:5%;">
+		<div id="settings">
+			<button type="button" id="easy">easy</button>
+			<button type="button" id="medium">medium</button>
+			<button type="button" id="hard">hard</button>
 		</div>
 
-		<div id = "options"  >
-        		<span class = "letters" id = "a">a</span>
-            		<span class = "letters" id = "b">b</span>
-        		<span class = "letters" id = "c">c</span>
-            		<span class = "letters" id = "d">d</span>
-        		<span class = "letters" id = "e">e</span>
-            		<span class = "letters" id = "f">f</span>
-        		<span class = "letters" id = "g">g</span>
-            		<span class = "letters" id = "h">h</span>
-        		<span class = "letters" id = "i">i</span>
-            		<span class = "letters" id = "j">j</span>
-        		<span class = "letters" id = "k">k</span>
-            		<span class = "letters" id = "l">l</span>
-        		<span class = "letters" id = "m">m</span>
-            		<span class = "letters" id = "n">n</span>
-        		<span class = "letters" id = "o">o</span>
-            		<span class = "letters" id = "p">p</span>
-        		<span class = "letters" id = "q">q</span>
-            		<span class = "letters" id = "r">r</span>
-        		<span class = "letters" id = "s">s</span>
-            		<span class = "letters" id = "t">t</span>
-        		<span class = "letters" id = "u">u</span>
-            		<span class = "letters" id = "v">v</span>
-        		<span class = "letters" id = "w">w</span>
-            		<span class = "letters" id = "x">x</span>
-        		<span class = "letters" id = "y">y</span>
-            		<span class = "letters" id = "z">z</span>
-        	</div>
-
-
-	<div id="container">
-		<canvas id="hangman" width="180" height="240"></canvas>
-
-		<!--
-		<span id = "attempt-ctr">
-			<span>Attempts Remaining: <span id = "attempts-left">9</span></span>		
-		</span>
-		-->
-
-	</div>
-	
-	
-	
-
-	<div id = "webster">
-		
-	</div>
-
-	<div style="text-align:center;margin-top:3%;width:100%">
-		<input id="New-Game" type="button" value="click to start a new game!" onclick="window.location.reload();" />
-	</div>
-	
-
-	
-	<script src="app.js" charset="utf-8" ></script>
-
+		<script src="application.js" charset="utf-8"></script>
 	</body>
 
 </html>
